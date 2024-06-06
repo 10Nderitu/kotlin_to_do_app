@@ -1,7 +1,6 @@
 package com.example.kotlintodo
 
 import android.graphics.Paint.STRIKE_THRU_TEXT_FLAG
-import android.icu.text.CaseMap.Title
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,18 +18,15 @@ class TodoAdapter(
     }
 
     private fun toggleStrikethrough(tvTitle: TextView, isChecked: Boolean) {
-        if (isChecked){
-           tvTitle.paintFlags = tvTitle.paintFlags or STRIKE_THRU_TEXT_FLAG
+        if (isChecked) {
+            tvTitle.paintFlags = tvTitle.paintFlags or STRIKE_THRU_TEXT_FLAG
         } else {
             tvTitle.paintFlags = tvTitle.paintFlags and STRIKE_THRU_TEXT_FLAG.inv()
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TodoViewHolder {
-        val view = LayoutInflater.from(parent.context).
-        inflate(R.layout.item,
-            parent,
-            false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item, parent, false)
         return TodoViewHolder(view)
     }
 
@@ -38,10 +34,10 @@ class TodoAdapter(
         val curTodo = todos[position]
         holder.tvItem.text = curTodo.title
         holder.cbDone.isChecked = curTodo.isChecked
-        toggleStrikethrough(tvTitle, curTodo.isChecked)
-        holder.cbDone.setOnCheckedChangeListener{ _, isChecked ->
-            toggleStrikethrough(tvTitle, isChecked)
-            curTodo.isChecked = !curTodo.isChecked
+        toggleStrikethrough(holder.tvItem, curTodo.isChecked)
+        holder.cbDone.setOnCheckedChangeListener { _, isChecked ->
+            toggleStrikethrough(holder.tvItem, isChecked)
+            curTodo.isChecked = isChecked
         }
     }
 
