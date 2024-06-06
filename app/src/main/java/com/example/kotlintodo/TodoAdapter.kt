@@ -17,6 +17,15 @@ class TodoAdapter(
         val cbDone: CheckBox = itemView.findViewById(R.id.cbDone)
     }
 
+    fun addTodo(todo: Todo) {
+        todos.add(todo)
+        notifyItemInserted(todos.size - 1)
+    }
+
+    fun deleteDoneTodos() {
+        todos.removeAll { todo -> todo.isChecked }
+        notifyDataSetChanged()
+    }
     private fun toggleStrikethrough(tvTitle: TextView, isChecked: Boolean) {
         if (isChecked) {
             tvTitle.paintFlags = tvTitle.paintFlags or STRIKE_THRU_TEXT_FLAG
@@ -37,7 +46,7 @@ class TodoAdapter(
         toggleStrikethrough(holder.tvItem, curTodo.isChecked)
         holder.cbDone.setOnCheckedChangeListener { _, isChecked ->
             toggleStrikethrough(holder.tvItem, isChecked)
-            curTodo.isChecked = isChecked
+            curTodo.isChecked = !curTodo.isChecked
         }
     }
 //item count
