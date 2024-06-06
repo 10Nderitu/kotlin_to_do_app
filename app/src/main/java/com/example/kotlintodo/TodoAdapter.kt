@@ -40,6 +40,7 @@ class TodoAdapter(
             curTodo.isChecked = isChecked
         }
     }
+//item count
 
     override fun getItemCount(): Int {
         return todos.size
